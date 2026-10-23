@@ -1,0 +1,4 @@
+--no-index
+--find-links ./wheels
+dify_plugin==0.10.2
+pillow==13.0.0

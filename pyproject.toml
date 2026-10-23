@@ -1,0 +1,8 @@
+[project]
+name = "image-merge"
+version = "0.0.2"
+requires-python = ">=3.12"
+dependencies = [
+    "dify-plugin==0.10.2",
+    "pillow==13.0.0",
+]
