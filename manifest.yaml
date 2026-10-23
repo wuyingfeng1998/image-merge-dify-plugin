@@ -15,6 +15,7 @@ description:
 icon: icon.svg
 icon_dark: icon-dark.svg
 repo: https://github.com/wuyingfeng1998/image-merge-dify-plugin
+contact: wuyingfeng1998@users.noreply.github.com
 resource:
   memory: 1073741824
   permission:
