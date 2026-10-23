@@ -1,0 +1,38 @@
+version: 0.0.2
+type: plugin
+author: wuyingfeng
+name: image-merge
+label:
+  en_US: Image Merge
+  ja_JP: 画像結合
+  zh_Hans: 图片拼接
+  pt_BR: Image Merge
+description:
+  en_US: Merge multiple JPG/PNG images into one image, stacked vertically in file order.
+  ja_JP: 複数の JPG/PNG 画像をファイル順に縦方向へ結合して 1 枚の画像にします。
+  zh_Hans: 将多张 JPG/PNG 图片按文件顺序纵向拼接成一张图片。
+  pt_BR: Mescla várias imagens JPG/PNG em uma única imagem, empilhadas verticalmente na ordem dos arquivos.
+icon: icon.svg
+icon_dark: icon-dark.svg
+repo: https://github.com/wuyingfeng1998/image-merge-dify-plugin
+resource:
+  memory: 1073741824
+  permission:
+    tool:
+      enabled: true
+plugins:
+  tools:
+    - provider/image-merge.yaml
+meta:
+  version: 0.0.2
+  arch:
+    - amd64
+    - arm64
+  runner:
+    language: python
+    version: "3.12"
+    entrypoint: main
+  minimum_dify_version: 1.0.0
+created_at: 2026-10-23T15:10:01.0889686+08:00
+privacy: PRIVACY.md
+verified: false

@@ -1,0 +1,21 @@
+identity:
+  author: wuyingfeng
+  name: image-merge
+  label:
+    en_US: Image Merge
+    zh_Hans: 图片拼接
+    pt_BR: Image Merge
+    ja_JP: 画像結合
+  description:
+    en_US: Merge multiple JPG/PNG images into one image, stacked vertically in file order.
+    zh_Hans: 将多张 JPG/PNG 图片按文件顺序纵向拼接成一张图片。
+    pt_BR: Mescla várias imagens JPG/PNG em uma única imagem, empilhadas verticalmente.
+    ja_JP: 複数の JPG/PNG 画像をファイル順に縦方向へ結合します。
+  icon: icon.svg
+  tags:
+    - image
+tools:
+  - tools/image-merge.yaml
+extra:
+  python:
+    source: provider/image-merge.py
