@@ -1,0 +1,80 @@
+identity:
+  name: merge_images_vertically
+  author: wuyingfeng
+  label:
+    en_US: Merge Images Vertically
+    zh_Hans: 图片纵向合并
+    ja_JP: 画像の縦結合
+    pt_BR: Mesclar imagens verticalmente
+description:
+  human:
+    en_US: Merge multiple JPG/PNG images into a single image, stacked vertically in the given file order.
+    zh_Hans: 将多张 JPG/PNG 图片按文件顺序自上而下拼接成一张图片。
+    ja_JP: 複数の JPG/PNG 画像を指定されたファイル順に縦方向へ結合して 1 枚の画像にします。
+    pt_BR: Mescla várias imagens JPG/PNG em uma única imagem, empilhadas verticalmente na ordem dos arquivos.
+  llm: Merge a list of image files (JPG/PNG) into one image by stacking them vertically in the order given in the file list. The wider image defines the canvas width and narrower images are centered horizontally.
+parameters:
+  - name: files
+    type: files
+    required: true
+    form: form
+    label:
+      en_US: Image files
+      zh_Hans: 图片文件列表
+      ja_JP: 画像ファイル
+      pt_BR: Arquivos de imagem
+    human_description:
+      en_US: Ordered list of JPG/PNG images, merged from top to bottom in this order.
+      zh_Hans: 按顺序排列的 JPG/PNG 图片列表，拼接顺序与列表顺序一致（从上到下）。
+      ja_JP: 上から下へ結合する JPG/PNG 画像の順序付きリストです。
+      pt_BR: Lista ordenada de imagens JPG/PNG, mescladas de cima para baixo nesta ordem.
+    llm_description: Ordered list of image files (JPG/PNG) to merge, stacked vertically from the first file to the last file.
+  - name: gap
+    type: number
+    required: false
+    form: form
+    default: 0
+    min: 0
+    max: 1000
+    label:
+      en_US: Gap (pixels)
+      zh_Hans: 图片间距（像素）
+      ja_JP: 間隔（ピクセル）
+      pt_BR: Espaçamento (pixels)
+    human_description:
+      en_US: Vertical spacing in pixels between two adjacent images, 0 means no spacing.
+      zh_Hans: 相邻两张图片之间的垂直间距（像素），0 表示无间距。
+      ja_JP: 隣り合う画像の垂直方向の間隔（ピクセル）。0 は間隔なし。
+      pt_BR: Espaçamento vertical em pixels entre imagens adjacentes. 0 significa sem espaçamento.
+    llm_description: Vertical spacing between adjacent images in pixels, defaults to 0.
+  - name: background_color
+    type: string
+    required: false
+    form: form
+    default: "#FFFFFF"
+    label:
+      en_US: Background color
+      zh_Hans: 背景色
+      ja_JP: 背景色
+      pt_BR: Cor de fundo
+    human_description:
+      en_US: Background color used to fill the canvas and transparent areas, supports HEX (e.g. #FFFFFF) or color names (e.g. white).
+      zh_Hans: 用于填充画布和透明区域的背景色，支持 HEX（如 #FFFFFF）或颜色名称（如 white）。
+      ja_JP: キャンバスと透明部分を埋める背景色。HEX（例 #FFFFFF）または色名（例 white）に対応します。
+      pt_BR: Cor de fundo usada para preencher a tela e áreas transparentes; aceita HEX (ex. #FFFFFF) ou nomes de cores (ex. white).
+    llm_description: Background color as HEX string such as "#FFFFFF" or a color name such as "white". Defaults to white.
+output_schema:
+  type: object
+  properties:
+    width:
+      type: integer
+      description: Width of the merged image in pixels.
+    height:
+      type: integer
+      description: Height of the merged image in pixels.
+    image_count:
+      type: integer
+      description: Number of images merged.
+extra:
+  python:
+    source: tools/image-merge.py
