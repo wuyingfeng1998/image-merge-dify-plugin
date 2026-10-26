@@ -24,6 +24,7 @@ No credentials or API keys are required. Runtime dependencies are `dify_plugin` 
 | Image files (`files`) | Yes | Ordered list of JPG/PNG images. The merge order follows the list order (top to bottom). |
 | Gap (`gap`) | No | Vertical spacing in pixels between adjacent images. Default `0`. |
 | Background color (`background_color`) | No | Fills padding and transparent areas, e.g. `#FFFFFF` or `white`. Default `#FFFFFF`. |
+| Output file name (`output_filename`) | No | Base name of the merged image without extension; `.png` is appended automatically. Leave empty to use the file name of the first input image. |
 
 The wider image defines the canvas width; narrower images are centered horizontally. The tool outputs one PNG file plus `width`, `height` and `image_count` variables.
 

@@ -1,4 +1,5 @@
 import io
+import re
 from collections.abc import Generator
 from typing import Any
 
@@ -28,6 +29,9 @@ class ImageMergeTool(Tool):
         files = self._normalize_files(tool_parameters.get("files"))
         gap = self._normalize_gap(tool_parameters.get("gap"))
         background = self._normalize_background(tool_parameters.get("background_color"))
+        output_name = self._normalize_output_name(
+            tool_parameters.get("output_filename"), files[0]
+        )
 
         # First pass: download and validate every file, collect the rendered size.
         sources: list[tuple[bytes, int, int]] = []
@@ -79,7 +83,7 @@ class ImageMergeTool(Tool):
         yield self.create_variable_message("image_count", len(sources))
         yield self.create_blob_message(
             payload,
-            meta={"mime_type": "image/png", "filename": "merged.png"},
+            meta={"mime_type": "image/png", "filename": output_name},
         )
         yield self.create_json_message(
             {
@@ -90,7 +94,7 @@ class ImageMergeTool(Tool):
             }
         )
         yield self.create_text_message(
-            f"已按文件顺序将 {len(sources)} 张图片纵向拼接，输出尺寸 {merged_width}×{merged_height}（PNG）。"
+            f"已按文件顺序将 {len(sources)} 张图片纵向拼接，输出尺寸 {merged_width}×{merged_height}（PNG），文件名 {output_name}。"
         )
 
     def _normalize_files(self, value: Any) -> list[File]:
@@ -165,6 +169,24 @@ class ImageMergeTool(Tool):
         if gap > 1000:
             raise ImageMergeError("图片间距不能大于 1000 像素")
         return gap
+
+    @staticmethod
+    def _normalize_output_name(value: Any, first_file: File) -> str:
+        name = ImageMergeTool._clean_name(str(value)) if value else ""
+        if not name:
+            name = ImageMergeTool._clean_name(first_file.filename or "") or "merged"
+        return f"{name}.png"
+
+    @staticmethod
+    def _clean_name(value: str) -> str:
+        name = value.replace("\\", "/").split("/")[-1].strip()
+        name = re.sub(r'[:*?"<>|\x00-\x1f]', "_", name).strip(" .")
+        lowered = name.lower()
+        for suffix in (".png", ".jpg", ".jpeg"):
+            if lowered.endswith(suffix):
+                name = name[: -len(suffix)]
+                break
+        return name.strip(" .")[:100]
 
     @staticmethod
     def _normalize_background(value: Any) -> tuple[int, int, int]:
